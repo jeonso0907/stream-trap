@@ -24,6 +24,28 @@
     <p id="password-error"></p>
   </div>
 </div>
+<script>
+  (function () {
+    var PASSWORD = 'mlb';
+    if (sessionStorage.getItem('auth') === '1') {
+      document.getElementById('password-gate').style.display = 'none';
+    }
+    window.checkPassword = function () {
+      var input = document.getElementById('password-input').value;
+      if (input === PASSWORD) {
+        sessionStorage.setItem('auth', '1');
+        document.getElementById('password-gate').style.display = 'none';
+      } else {
+        document.getElementById('password-error').textContent = 'Incorrect password.';
+        document.getElementById('password-input').value = '';
+        document.getElementById('password-input').focus();
+      }
+    };
+    document.getElementById('password-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') window.checkPassword();
+    });
+  })();
+</script>
 
 <!-- ════════════════════════════════════════ NAVBAR ════════ -->
 <nav class="navbar" role="navigation" aria-label="main navigation">
