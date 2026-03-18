@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StreamTrap: Camera-Trap Species Recognition Over Time</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════ NAVBAR ════════ -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#">
+      <span>StreamTrap</span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#findings">Findings</a>
+      <a class="navbar-item" href="#benchmark">Benchmark</a>
+      <a class="navbar-item" href="#recipe">Recipe</a>
+      <a class="navbar-item" href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════ HERO ════════ -->
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+
+      <h1 class="title is-2 publication-title">
+        Lessons and Open Questions from a Unified Study of<br>
+        Camera-Trap Species Recognition Over Time
+      </h1>
+
+      <div class="publication-authors" style="margin-top:1.2rem;">
+        <span class="author-block"><a href="#">Sooyoung Jeon</a><sup>*1</sup>,</span>
+        <span class="author-block"><a href="#">Hongjie Tian</a><sup>*1</sup>,</span>
+        <span class="author-block"><a href="#">Lemeng Wang</a><sup>*1</sup>,</span>
+        <span class="author-block"><a href="#">Zheda Mai</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="#">Vidhi Bakshi</a><sup>1</sup>,</span><br>
+        <span class="author-block"><a href="#">Jiacheng Hou</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="#">Ping Zhang</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="#">Arpita Chowdhury</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="#">Jianyang Gu</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="#">Wei-Lun Chao</a><sup>2</sup></span>
+      </div>
+
+      <div style="margin-top:0.6rem; font-size:0.95rem; color:#555;">
+        <sup>1</sup>The Ohio State University &nbsp;&nbsp;
+        <sup>2</sup>Boston University
+      </div>
+      <div class="eql-note">* Equal contribution</div>
+
+      <!-- Link buttons -->
+      <div class="publication-links" style="margin-top:1.4rem;">
+        <span class="buttons is-centered">
+          <a href="#" class="button is-dark">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper</span>
+          </a>
+          <a href="#" class="button is-dark">
+            <span class="icon"><i class="ai ai-arxiv"></i></span>
+            <span>arXiv</span>
+          </a>
+          <a href="#" class="button is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+          <a href="#" class="button is-dark">
+            <span class="icon"><i class="fas fa-database"></i></span>
+            <span>Dataset</span>
+          </a>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ TEASER ════════ -->
+<section id="teaser">
+  <div class="container">
+    <div class="teaser-figure">
+
+      <!-- Inline SVG teaser (temporal shift diagram) -->
+      <svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;font-family:'Noto Sans',sans-serif;">
+        <!-- Background -->
+        <rect width="860" height="260" fill="#fafafa" rx="8"/>
+
+        <!-- Left panel: temporal shifts -->
+        <text x="16" y="22" font-size="11" font-weight="700" fill="#222">Temporal Shifts</text>
+        <text x="16" y="40" font-size="9.5" fill="#555">Even at a fixed site, backgrounds &amp; animals evolve over time.</text>
+
+        <!-- Timeline arrow -->
+        <line x1="16" y1="55" x2="300" y2="55" stroke="#3273dc" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <defs>
+          <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#3273dc"/>
+          </marker>
+        </defs>
+        <text x="145" y="48" font-size="9" fill="#3273dc" text-anchor="middle">Time Span →</text>
+
+        <!-- Season row -->
+        <text x="16" y="80" font-size="9" fill="#888">Season</text>
+        <rect x="60" y="68" width="52" height="34" rx="4" fill="#c8e6c9"/>
+        <text x="86" y="90" font-size="16" text-anchor="middle">🌿</text>
+        <rect x="118" y="68" width="52" height="34" rx="4" fill="#bbdefb"/>
+        <text x="144" y="90" font-size="16" text-anchor="middle">🌨️</text>
+        <rect x="176" y="68" width="52" height="34" rx="4" fill="#ffe0b2"/>
+        <text x="202" y="90" font-size="16" text-anchor="middle">🍂</text>
+        <rect x="234" y="68" width="52" height="34" rx="4" fill="#c8e6c9"/>
+        <text x="260" y="90" font-size="16" text-anchor="middle">🌸</text>
+
+        <!-- Weather row -->
+        <text x="16" y="120" font-size="9" fill="#888">Weather</text>
+        <rect x="60" y="108" width="52" height="34" rx="4" fill="#fff9c4"/>
+        <text x="86" y="130" font-size="16" text-anchor="middle">☀️</text>
+        <rect x="118" y="108" width="52" height="34" rx="4" fill="#b3e5fc"/>
+        <text x="144" y="130" font-size="16" text-anchor="middle">🌧️</text>
+        <rect x="176" y="108" width="52" height="34" rx="4" fill="#e0e0e0"/>
+        <text x="202" y="130" font-size="16" text-anchor="middle">🌫️</text>
+        <rect x="234" y="108" width="52" height="34" rx="4" fill="#fff9c4"/>
+        <text x="260" y="130" font-size="16" text-anchor="middle">☀️</text>
+
+        <!-- Animals row -->
+        <text x="16" y="160" font-size="9" fill="#888">Animals</text>
+        <rect x="60" y="148" width="52" height="34" rx="4" fill="#f3e5f5"/>
+        <text x="86" y="170" font-size="16" text-anchor="middle">🦒</text>
+        <rect x="118" y="148" width="52" height="34" rx="4" fill="#fce4ec"/>
+        <text x="144" y="170" font-size="16" text-anchor="middle">🦓</text>
+        <rect x="176" y="148" width="52" height="34" rx="4" fill="#e8f5e9"/>
+        <text x="202" y="170" font-size="16" text-anchor="middle">🐘</text>
+        <rect x="234" y="148" width="52" height="34" rx="4" fill="#fce4ec"/>
+        <text x="260" y="148" width="52" height="34" rx="4" fill="#fce4ec"/>
+        <text x="260" y="170" font-size="16" text-anchor="middle">🦁</text>
+
+        <!-- Vertical separator -->
+        <line x1="320" y1="20" x2="320" y2="245" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Right panel: accuracy lines chart -->
+        <text x="340" y="22" font-size="11" font-weight="700" fill="#222">Streaming Evaluation Results</text>
+
+        <!-- Axes -->
+        <line x1="375" y1="200" x2="830" y2="200" stroke="#ccc" stroke-width="1"/>
+        <line x1="375" y1="55" x2="375" y2="200" stroke="#ccc" stroke-width="1"/>
+
+        <!-- Y axis labels -->
+        <text x="370" y="200" font-size="8" fill="#888" text-anchor="end">60</text>
+        <text x="370" y="170" font-size="8" fill="#888" text-anchor="end">70</text>
+        <text x="370" y="140" font-size="8" fill="#888" text-anchor="end">80</text>
+        <text x="370" y="110" font-size="8" fill="#888" text-anchor="end">90</text>
+        <text x="370" y="80" font-size="8" fill="#888" text-anchor="end">100</text>
+        <text x="342" y="130" font-size="9" fill="#555" transform="rotate(-90 342 130)" text-anchor="middle">Per-Class Accuracy (%)</text>
+
+        <!-- X axis labels -->
+        <text x="375" y="214" font-size="8" fill="#888" text-anchor="middle">1</text>
+        <text x="450" y="214" font-size="8" fill="#888" text-anchor="middle">2</text>
+        <text x="525" y="214" font-size="8" fill="#888" text-anchor="middle">3</text>
+        <text x="600" y="214" font-size="8" fill="#888" text-anchor="middle">4</text>
+        <text x="675" y="214" font-size="8" fill="#888" text-anchor="middle">5</text>
+        <text x="750" y="214" font-size="8" fill="#888" text-anchor="middle">6</text>
+        <text x="825" y="214" font-size="8" fill="#888" text-anchor="middle">7</text>
+        <text x="600" y="226" font-size="8.5" fill="#555" text-anchor="middle">Interval</text>
+
+        <!-- Grid lines (horizontal) -->
+        <line x1="375" y1="170" x2="830" y2="170" stroke="#eee" stroke-width="1"/>
+        <line x1="375" y1="140" x2="830" y2="140" stroke="#eee" stroke-width="1"/>
+        <line x1="375" y1="110" x2="830" y2="110" stroke="#eee" stroke-width="1"/>
+        <line x1="375" y1="80" x2="830" y2="80" stroke="#eee" stroke-width="1"/>
+
+        <!-- Zero-shot line (gray, flat ~84% → y≈128) -->
+        <polyline points="375,128 450,124 525,130 600,122 675,128 750,124 825,126"
+                  fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+        <!-- Oracle★ line (blue, ~89% → y≈106) -->
+        <polyline points="375,112 450,106 525,114 600,102 675,108 750,104 825,110"
+                  fill="none" stroke="#3273dc" stroke-width="2"/>
+
+        <!-- Accum★ line (orange, ~78% → y≈148) -->
+        <polyline points="375,148 450,154 525,143 600,158 675,146 750,151 825,144"
+                  fill="none" stroke="#ff6b35" stroke-width="2"/>
+
+        <!-- Accum naive line (red dashed, ~68% → y≈188) -->
+        <polyline points="375,188 450,182 525,190 600,178 675,186 750,183 825,188"
+                  fill="none" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- Legend -->
+        <line x1="590" y1="38" x2="610" y2="38" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="614" y="41" font-size="8" fill="#555">Zero-Shot</text>
+        <line x1="680" y1="38" x2="700" y2="38" stroke="#3273dc" stroke-width="2"/>
+        <text x="704" y="41" font-size="8" fill="#555">Oracle★</text>
+        <line x1="590" y1="52" x2="610" y2="52" stroke="#ff6b35" stroke-width="2"/>
+        <text x="614" y="55" font-size="8" fill="#555">Accum★ (ours)</text>
+        <line x1="680" y1="52" x2="700" y2="52" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="704" y="55" font-size="8" fill="#555">Accum (naive)</text>
+      </svg>
+
+      <p class="teaser-caption">
+        <strong>(Left)</strong> Temporal shifts: even at a fixed site, foreground and background appearances evolve due to changing seasons, weather, and animal distribution.
+        <strong>(Right)</strong> Streaming evaluation: the accumulated★ model is fine-tuned on data up to the current interval and evaluated on the next interval.
+        Our recommended recipe (BSM + LoRA) consistently outperforms naive fine-tuning and approaches the oracle upper bound.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ ABSTRACT ════════ -->
+<section id="abstract">
+  <div class="container">
+    <h2 class="section-title">Abstract</h2>
+    <hr class="divider">
+    <p class="abstract-text">
+      Camera traps are crucial for large-scale biodiversity monitoring, yet accurate automated analysis remains challenging due to diverse deployment environments. While the computer vision community has predominantly framed this challenge as cross-domain (e.g., cross-site) generalization, this perspective overlooks a primary challenge faced by ecological practitioners: <strong>maintaining reliable recognition at a fixed site over time</strong>, where the dynamic nature of ecosystems introduces profound temporal shifts in both background and animal distributions.
+    </p>
+    <br>
+    <p class="abstract-text">
+      To bridge this gap, we present the first unified study of <strong>camera-trap species recognition over time</strong>. We introduce a realistic, large-scale benchmark, <strong>STREAMTRAP</strong>, comprising 546 camera traps with a streaming protocol that evaluates models over chronologically ordered intervals. Our end-user-centric study yields four key findings: (1) biological foundation models underperform at numerous sites even in initial intervals; (2) naive adaptation can degrade below zero-shot performance; (3) severe class imbalance and pronounced temporal shift are the two main drivers of difficulty; and (4) effective integration of model-update and post-processing techniques can largely improve accuracy, though a gap from the upper bounds remains.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ FINDINGS ════════ -->
+<section id="findings" class="section">
+  <div class="container">
+    <h2 class="section-title">Key Findings</h2>
+    <hr class="divider">
+    <p class="section-subtitle">Four deployment-critical insights from our end-user-centric study</p>
+
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="finding-card">
+          <div class="finding-number">1</div>
+          <h4>Adaptation is Still Required</h4>
+          <p>BioCLIP 2's zero-shot accuracy varies widely across 546 sites — 161 exceed 90%, but 162 fall in the 50–80% range. Foundation models alone are insufficient; site-specific adaptation remains critical.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="finding-card">
+          <div class="finding-number">2</div>
+          <h4>Naive Adaptation Can Hurt</h4>
+          <p>Under realistic streaming evaluation, naive supervised fine-tuning on all accumulated data consistently underperforms zero-shot baselines by a large margin — even without any storage or computation constraints.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="finding-card">
+          <div class="finding-number">3</div>
+          <h4>Two Compounding Drivers</h4>
+          <p>Severe class imbalance (top-2 species average ~71% of images) and pronounced inter-interval temporal shift (TCDS) jointly create a compounding effect that makes continual adaptation exceptionally difficult.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="finding-card">
+          <div class="finding-number">4</div>
+          <h4>Effective Recipes Exist, but Gaps Remain</h4>
+          <p>BSM + LoRA yields substantial improvements and enables 474/546 sites to outperform zero-shot. Post-processing techniques further narrow the gap to oracle, but principled hyperparameter selection without future data remains open.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ BENCHMARK ════════ -->
+<section id="benchmark" class="section">
+  <div class="container">
+    <h2 class="section-title">STREAMTRAP Benchmark</h2>
+    <hr class="divider">
+    <p class="section-subtitle">A realistic, large-scale benchmark for camera-trap species recognition over time</p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-number">546</div>
+        <div class="stat-label">Camera Traps</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">17</div>
+        <div class="stat-label">Datasets (LILA BC)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">3.2M+</div>
+        <div class="stat-label">Processed Images</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Continents</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">6+</div>
+        <div class="stat-label">Months per Trap</div>
+      </div>
+    </div>
+
+    <div class="columns" style="margin-top:1.5rem;">
+      <div class="column is-half">
+        <h4 style="font-family:'Google Sans',sans-serif;font-weight:700;margin-bottom:0.6rem;">Streaming Evaluation Protocol</h4>
+        <div class="protocol-box">
+          At interval <em>j</em>, a model accesses cumulative labeled training data from all intervals up to <em>j</em>, updates its parameters, and is evaluated on the unseen test data from interval <em>j+1</em>. This mirrors the real-world deployment lifecycle of camera-trap systems.
+        </div>
+        <h4 style="font-family:'Google Sans',sans-serif;font-weight:700;margin-bottom:0.6rem;margin-top:1rem;">FAIR Processing Pipeline</h4>
+        <p style="font-size:0.88rem;color:#444;line-height:1.7;">
+          The pipeline enforces <strong>single-species filtering</strong> (removes &lt;2% of images), <strong>detection filtering</strong> (MegaDetector v5a, confidence &gt;0.8), and <strong>sequence-level train/test splitting</strong> to prevent temporal data leakage from burst images. 30-day interval windows with adaptive merging ensure sufficient data for evaluation.
+        </p>
+      </div>
+      <div class="column is-half">
+        <h4 style="font-family:'Google Sans',sans-serif;font-weight:700;margin-bottom:0.6rem;">Class Imbalance &amp; Temporal Shift</h4>
+        <p style="font-size:0.88rem;color:#444;line-height:1.7;margin-bottom:0.8rem;">
+          Camera traps passively await animals, producing extreme imbalance: the top-2 species average <strong>~71%</strong> of all images per trap, while the 2 least-frequent classes contain only <strong>~49 images</strong> on average.
+        </p>
+        <p style="font-size:0.88rem;color:#444;line-height:1.7;">
+          We introduce the <strong>Temporal Class Distribution Shift (TCDS)</strong> metric to quantify inter-interval distribution shift. A substantial fraction of traps exhibit high TCDS, meaning models achieving high accuracy on current intervals are not guaranteed to generalize to future intervals.
+        </p>
+        <!-- TCDS formula box -->
+        <div style="background:#f0f4ff;border-radius:8px;padding:0.9rem 1.2rem;margin-top:0.8rem;font-size:0.85rem;color:#333;">
+          <strong>TCDS</strong> = average over all consecutive interval pairs of the total variation in class frequency distributions. Higher TCDS → larger temporal shift.
+        </div>
+      </div>
+    </div>
+
+    <!-- Dataset table (simplified) -->
+    <h4 style="font-family:'Google Sans',sans-serif;font-weight:700;margin:2rem 0 0.8rem;text-align:center;">Dataset Sources (selected)</h4>
+    <div class="table-container" style="max-width:820px;margin:0 auto;">
+      <table class="table is-striped is-hoverable is-fullwidth results-table">
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>Continent</th>
+            <th>Orig. Images</th>
+            <th>StreamTrap Traps</th>
+            <th>Classes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Snapshot Serengeti</td><td>Africa</td><td>7178K</td><td>188</td><td>45</td></tr>
+          <tr><td>NZ Trail Cam. Animals</td><td>Oceania</td><td>2046K</td><td>139</td><td>41</td></tr>
+          <tr><td>NA Camera Trap Img</td><td>N. America</td><td>3281K</td><td>52</td><td>20</td></tr>
+          <tr><td>Snapshot APNR</td><td>Africa</td><td>228K</td><td>40</td><td>19</td></tr>
+          <tr><td>Snapshot Madikwe</td><td>Africa</td><td>278K</td><td>28</td><td>28</td></tr>
+          <tr><td>Idaho Camera Traps</td><td>N. America</td><td>1536K</td><td>15</td><td>10</td></tr>
+          <tr><td style="color:#666;font-style:italic;" colspan="5">… and 11 more datasets</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ RECIPE ════════ -->
+<section id="recipe" class="section">
+  <div class="container">
+    <h2 class="section-title">Recommended Adaptation Recipe</h2>
+    <hr class="divider">
+    <p class="section-subtitle">A practical, first-to-try strategy for camera-trap deployment</p>
+
+    <div class="recipe-box">
+      <h3>Core Recipe (★)</h3>
+      <div>
+        <span class="recipe-badge">BSM Loss</span>
+        <span class="recipe-plus">+</span>
+        <span class="recipe-badge">LoRA (PEFT)</span>
+      </div>
+      <p style="font-size:0.87rem;color:#555;margin-top:1rem;line-height:1.6;">
+        <strong>Balanced Softmax (BSM)</strong> addresses severe class imbalance without hyperparameter tuning.
+        <strong>LoRA</strong> preserves pre-trained representations while enabling efficient site-specific adaptation.
+        Combined, they yield a compounding boost that enables <strong>474 / 546 sites</strong> to outperform zero-shot (vs. only 332 for naive fine-tuning).
+      </p>
+      <div class="postprocess-tags">
+        <strong>Augment with post-processing:</strong><br>
+        <span class="tag-inline">Logit Calibration</span>
+        <span class="tag-inline">Weight Interpolation (WiSE)</span>
+        <span class="tag-inline">Interval Model Selection</span>
+      </div>
+    </div>
+
+    <!-- Results table -->
+    <div class="table-container" style="max-width:780px;margin:2.5rem auto 0;">
+      <p style="text-align:center;font-size:0.88rem;color:#666;margin-bottom:0.8rem;">
+        Accuracy comparison across 20 representative camera traps (averaged). Blue = improvement over zero-shot; Red = degradation.
+      </p>
+      <table class="table is-striped is-hoverable is-fullwidth results-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Avg. Accuracy (%)</th>
+            <th>vs. Zero-Shot</th>
+            <th>Sites &gt; ZS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Zero-Shot (BioCLIP 2)</td>
+            <td>81.9</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Accum (naive fine-tune)</td>
+            <td>67.9</td>
+            <td class="red">−14.0</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Accum★ (BSM + LoRA)</td>
+            <td>84.8</td>
+            <td class="blue">+2.9</td>
+            <td>474 / 546</td>
+          </tr>
+          <tr>
+            <td>Oracle★ (upper bound)</td>
+            <td>88.8</td>
+            <td class="blue">+6.9</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ OPEN QUESTIONS ════════ -->
+<section id="openq" class="section">
+  <div class="container" style="max-width:780px;">
+    <h2 class="section-title">Open Questions</h2>
+    <hr class="divider">
+    <p class="section-subtitle">Critical deployment questions largely underexplored by the vision community</p>
+
+    <div class="question-item">
+      <div class="question-icon"><i class="fas fa-search"></i></div>
+      <div>
+        <h5>When is zero-shot sufficient?</h5>
+        <p>Before any data collection, practitioners need to predict whether a foundation model will be accurate enough at a new site. OOD confidence signals (MSP) show positive but weak correlation (r = 0.907) with zero-shot accuracy — insufficient for reliable deployment decisions.</p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question-icon"><i class="fas fa-sync-alt"></i></div>
+      <div>
+        <h5>Is continual adaptation necessary?</h5>
+        <p>Model accuracy generally increases with more intervals of adaptation, but not all updates are equally valuable. Freezing a model after 75% of intervals already achieves 82.7% vs. 84.9% for full adaptation — motivating selective updating.</p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question-icon"><i class="fas fa-clock"></i></div>
+      <div>
+        <h5>When should we adapt? (Adapt-or-Skip)</h5>
+        <p>At every interval, practitioners face the Adapt-or-Skip decision before seeing future data. MSP-based and CLIP feature-based heuristics both perform close to random guessing (~47–48% accuracy). An oracle always selecting the correct action outperforms baselines by <strong>11.34%</strong> — substantial room for future research.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ BIBTEX ════════ -->
+<section id="bibtex" class="section">
+  <div class="container">
+    <h2 class="section-title">BibTeX</h2>
+    <hr class="divider">
+    <div class="bibtex-container">
+      <button class="copy-btn" onclick="copyBib()">Copy</button>
+      <pre id="bib-text">@article{jeon2025streamtrap,
+  title     = {Lessons and Open Questions from a Unified Study of
+               Camera-Trap Species Recognition Over Time},
+  author    = {Jeon, Sooyoung and Tian, Hongjie and Wang, Lemeng and
+               Mai, Zheda and Bakshi, Vidhi and Hou, Jiacheng and
+               Zhang, Ping and Chowdhury, Arpita and Gu, Jianyang and
+               Chao, Wei-Lun},
+  journal   = {arXiv preprint},
+  year      = {2025},
+  note      = {Equal contribution: Jeon, Tian, Wang}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      This research is supported by the National Science Foundation (ICICLE: OAC-2112606)
+      and the Ohio Supercomputer Center.<br>
+      Website template inspired by <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+      The source code is available under the
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a> license.
+    </p>
+  </div>
+</footer>
+
+<script src="static/js/main.js"></script>
+
+</body>
+</html>
