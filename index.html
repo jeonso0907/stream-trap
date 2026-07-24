@@ -18,27 +18,44 @@
 </head>
 <body>
 
-<!-- ════════════════════════════════════════ NAVBAR ════════ -->
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="#">
-      <span class="sc">StreamTrap</span>
+<!-- Fixed section rail -->
+<aside class="section-rail" aria-label="Section navigation">
+  <a class="section-rail-brand sc" href="#top">StreamTrap</a>
+  <button class="section-rail-toggle" type="button" aria-expanded="false"
+    aria-controls="section-rail-nav">
+    <span class="section-rail-toggle-label">Sections</span>
+    <strong id="current-section-label">TL;DR</strong>
+    <i aria-hidden="true"></i>
+  </button>
+  <nav class="section-rail-nav" id="section-rail-nav">
+    <a class="section-rail-link active" href="#tldr" data-section="tldr"
+      aria-current="true"><span>TL;DR</span></a>
+    <a class="section-rail-link" href="#abstract" data-section="abstract">
+      <span>Abstract</span>
     </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-end">
-      <a class="navbar-item" href="#abstract">Abstract</a>
-      <a class="navbar-item" href="#findings">Findings</a>
-      <a class="navbar-item" href="#benchmark">Benchmark</a>
-      <a class="navbar-item" href="#results">Results</a>
-      <a class="navbar-item" href="#recipe">Recipe</a>
-      <a class="navbar-item" href="#bibtex">BibTeX</a>
-    </div>
-  </div>
-</nav>
+    <a class="section-rail-link" href="#benchmark" data-section="benchmark">
+      <span>Benchmark</span>
+    </a>
+    <a class="section-rail-link" href="#findings" data-section="findings">
+      <span>Findings</span>
+    </a>
+    <a class="section-rail-link" href="#recipe" data-section="recipe">
+      <span>Recipe</span>
+    </a>
+    <a class="section-rail-link" href="#results" data-section="results">
+      <span>Results</span>
+    </a>
+    <a class="section-rail-link" href="#openq" data-section="openq">
+      <span>Open Questions</span>
+    </a>
+    <a class="section-rail-link" href="#bibtex" data-section="bibtex">
+      <span>BibTeX</span>
+    </a>
+  </nav>
+</aside>
 
 <!-- ════════════════════════════════════════ HERO ════════ -->
-<section class="hero is-light">
+<section id="top" class="hero is-light">
   <div class="hero-body">
     <div class="container has-text-centered">
 
@@ -60,17 +77,19 @@
         <span class="author-block"><a href="#">Wei-Lun Chao</a><sup>2</sup></span>
       </div>
 
-      <div style="margin-top:0.6rem; font-size:0.95rem; color:#555;">
+      <div style="margin-top:0.6rem; font-size:1.02rem; color:#555;">
         <sup>1</sup>The Ohio State University &nbsp;&nbsp;
         <sup>2</sup>Boston University
       </div>
       <div class="eql-note">* Equal contribution</div>
+      <div class="publication-venue">ECCV 2026</div>
 
       <div class="publication-links" style="margin-top:1.4rem;">
         <span class="buttons is-centered">
-          <a class="button is-dark" disabled>
+          <a class="button is-dark" href="https://arxiv.org/abs/2603.20509"
+            target="_blank" rel="noopener noreferrer">
             <span class="icon"><i class="ai ai-arxiv"></i></span>
-            <span>arXiv (Coming Soon)</span>
+            <span>arXiv</span>
           </a>
           <a class="button is-dark" disabled>
             <span class="icon"><i class="fab fa-github"></i></span>
@@ -87,16 +106,83 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════ TEASER ════════ -->
-<section id="teaser">
+<!-- Interactive seasonal cover -->
+<section id="teaser" class="season-cover-section" aria-label="Interactive StreamTrap seasonal experience">
+  <div class="season-cover">
+    <div class="season-scene" aria-hidden="true">
+      <img class="season-panorama" src="static/images/season-panorama.webp" alt=""
+        decoding="async" fetchpriority="high" draggable="false">
+    </div>
+
+    <div class="season-brand">
+      <span class="season-leaf season-leaf-top"></span>
+      <span class="season-leaf season-leaf-bottom"></span>
+      <h1>StreamTrap</h1>
+      <div class="season-accent"></div>
+      <p>Camera-Trap<br><span class="season-subtitle-line">Recognition Over Time</span></p>
+
+      <div class="season-performance" aria-label="Per-class model accuracy over time">
+        <div class="season-performance-heading">
+          <span>Per-Class Accuracy</span>
+          <strong id="performance-interval">Interval 3</strong>
+        </div>
+        <div class="performance-row">
+          <span class="performance-model"><i class="performance-swatch zero-shot"></i>Zero-Shot</span>
+          <span class="performance-track"><i id="score-zero-shot" style="--score: 60"></i></span>
+          <strong id="value-zero-shot">~60%</strong>
+        </div>
+        <div class="performance-row">
+          <span class="performance-model"><i class="performance-swatch accumulated"></i>Accumulated★</span>
+          <span class="performance-track"><i id="score-accumulated" style="--score: 66"></i></span>
+          <strong id="value-accumulated">~66%</strong>
+        </div>
+        <div class="performance-row">
+          <span class="performance-model"><i class="performance-swatch oracle"></i>Oracle★</span>
+          <span class="performance-track"><i id="score-oracle" style="--score: 83"></i></span>
+          <strong id="value-oracle">~83%</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="season-status" aria-live="polite">
+      <span id="season-name">Summer</span>
+    </div>
+
+    <div class="season-timeline" role="tablist" aria-label="Explore the seasons">
+      <button class="season-dot spring" type="button" role="tab" aria-selected="false"
+        data-season="0" data-name="Spring" data-color="#b9d98b"><span>Spring</span></button>
+      <button class="season-dot summer active" type="button" role="tab" aria-selected="true"
+        data-season="1" data-name="Summer" data-color="#6e9d62"><span>Summer</span></button>
+      <button class="season-dot autumn" type="button" role="tab" aria-selected="false"
+        data-season="2" data-name="Autumn" data-color="#dc8a43"><span>Autumn</span></button>
+      <button class="season-dot winter" type="button" role="tab" aria-selected="false"
+        data-season="3" data-name="Winter" data-color="#e7e9e2"><span>Winter</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ TL;DR ════════ -->
+<section id="tldr" class="section">
   <div class="container">
-    <div class="teaser-figure">
-      <img src="static/images/teaser.png" alt="Temporal shifts and streaming evaluation">
-      <p class="teaser-caption">
-        Even at a fixed site, backgrounds and species distributions shift continuously with seasons, weather, and migration.
-        We evaluate models under a realistic streaming protocol — trained on past intervals, tested on the next — and show that
-        our recipe (BSM + LoRA) consistently outperforms naive fine-tuning and closes the gap to the oracle upper bound.
-      </p>
+    <div class="tldr-box">
+      <div class="tldr-heading">
+        <span>TL;DR</span>
+        <h2>Camera-trap recognition is a temporal problem.</h2>
+      </div>
+      <div class="tldr-points">
+        <article>
+          <strong>Zero-Shot varies by site</strong>
+          <p>Even strong biological foundation models are not consistently reliable across deployments.</p>
+        </article>
+        <article>
+          <strong>Naive adaptation can hurt</strong>
+          <p>Training on past intervals does not guarantee strong performance on the next unseen interval.</p>
+        </article>
+        <article>
+          <strong>A practical recipe helps</strong>
+          <p>Balanced Softmax with LoRA makes adaptation substantially more robust, though open gaps remain.</p>
+        </article>
+      </div>
     </div>
   </div>
 </section>
@@ -113,6 +199,62 @@
     <p class="abstract-text">
       To bridge this gap, we present the first unified study of <strong>camera-trap species recognition over time</strong>. We introduce a realistic, large-scale benchmark, <strong><span class="sc">StreamTrap</span></strong>, comprising 546 camera traps with a streaming protocol that evaluates models over chronologically ordered intervals. Our end-user-centric study yields four key findings: (1) biological foundation models underperform at numerous sites even in initial intervals; (2) naive adaptation can degrade below zero-shot performance; (3) severe class imbalance and pronounced temporal shift are the two main drivers of difficulty; and (4) effective integration of model-update and post-processing techniques can largely improve accuracy, though a gap from the upper bounds remains.
     </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ BENCHMARK ════════ -->
+<section id="benchmark" class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="sc">StreamTrap</span> Benchmark</h2>
+    <hr class="divider">
+    <p class="section-subtitle">A realistic, large-scale benchmark for camera-trap species recognition over time</p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-number">546</div>
+        <div class="stat-label">Camera Traps</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">17</div>
+        <div class="stat-label">Datasets (LILA BC)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">3.2M+</div>
+        <div class="stat-label">Processed Images</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Continents</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">6+</div>
+        <div class="stat-label">Months per Trap</div>
+      </div>
+    </div>
+
+    <div class="benchmark-figures" style="margin-top:2rem;">
+      <div class="benchmark-fig-col">
+        <h3 class="narrative-title">How does streaming evaluation work?</h3>
+        <p class="narrative-text">
+          Unlike conventional benchmarks where all target data is available at once,
+          <span class="sc">StreamTrap</span> mirrors how camera traps operate in the field. At each interval,
+          a model is updated on everything seen so far — then evaluated on the <em>next</em> unseen interval.
+          This chronological train-then-test loop is what makes naive fine-tuning surprisingly fragile.
+        </p>
+        <img src="static/images/eval_protocol_v2.png"
+          alt="Training and testing protocol across sequential camera-trap intervals"
+          loading="lazy" decoding="async">
+      </div>
+      <div class="benchmark-fig-col">
+        <h3 class="narrative-title">A benchmark built for diversity and difficulty</h3>
+        <p class="narrative-text">
+          <span class="sc">StreamTrap</span> spans a wide range of conditions — from 6-month deployments to
+          multi-year streams, from 5-class to 45-class ecosystems. The bottom row reveals the core challenge:
+          high TCDS and extreme class imbalance are not edge cases but the norm.
+        </p>
+        <img src="static/images/streamtrap_stat.png" alt="StreamTrap dataset statistics">
+      </div>
+    </div>
   </div>
 </section>
 
@@ -181,127 +323,6 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════ BENCHMARK ════════ -->
-<section id="benchmark" class="section">
-  <div class="container">
-    <h2 class="section-title"><span class="sc">StreamTrap</span> Benchmark</h2>
-    <hr class="divider">
-    <p class="section-subtitle">A realistic, large-scale benchmark for camera-trap species recognition over time</p>
-
-
-    <div class="stats-row">
-      <div class="stat-box">
-        <div class="stat-number">546</div>
-        <div class="stat-label">Camera Traps</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">17</div>
-        <div class="stat-label">Datasets (LILA BC)</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">3.2M+</div>
-        <div class="stat-label">Processed Images</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">5</div>
-        <div class="stat-label">Continents</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">6+</div>
-        <div class="stat-label">Months per Trap</div>
-      </div>
-    </div>
-
-    <!-- Streaming protocol + Statistics side by side -->
-    <div class="benchmark-figures" style="margin-top:2rem;">
-      <div class="benchmark-fig-col">
-        <h3 class="narrative-title">How does streaming evaluation work?</h3>
-        <p class="narrative-text">
-          Unlike conventional benchmarks where all target data is available at once,
-          <span class="sc">StreamTrap</span> mirrors how camera traps operate in the field. At each interval,
-          a model is updated on everything seen so far — then evaluated on the <em>next</em> unseen interval.
-          This chronological train-then-test loop is what makes naive fine-tuning surprisingly fragile.
-        </p>
-        <img src="static/images/eval_protocol.png" alt="Streaming evaluation protocol diagram">
-      </div>
-      <div class="benchmark-fig-col">
-        <h3 class="narrative-title">A benchmark built for diversity and difficulty</h3>
-        <p class="narrative-text">
-          <span class="sc">StreamTrap</span> spans a wide range of conditions — from 6-month deployments to
-          multi-year streams, from 5-class to 45-class ecosystems. The bottom row reveals the core challenge:
-          high TCDS and extreme class imbalance are not edge cases but the norm.
-        </p>
-        <img src="static/images/streamtrap_stat.png" alt="StreamTrap dataset statistics">
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════ RESULTS ════════ -->
-<section id="results" class="section">
-  <div class="container">
-    <h2 class="section-title">Results</h2>
-    <hr class="divider">
-
-    <!-- Zero-shot variability -->
-    <div class="narrative-block">
-      <h3 class="narrative-title">Foundation models are inconsistent across sites</h3>
-      <p class="narrative-text">
-        BioCLIP 2 — a state-of-the-art biological vision foundation model — shows remarkable variability:
-        161 sites exceed 90% zero-shot accuracy, but another 162 fall below 80%. This wide spread makes it
-        impossible to rely on zero-shot alone. Worse, naively fine-tuning on accumulated data (middle panel)
-        degrades performance on ~40% of sites — the model over-adapts to past distributions and fails on future intervals.
-        Our recipe (Oracle★, right panel) dramatically reduces these failure cases.
-      </p>
-      <img src="static/images/zs_oracle.png" alt="Zero-shot and oracle performance across 546 camera traps">
-    </div>
-
-    <!-- Results table -->
-    <div class="table-container" style="max-width:780px;margin:2.5rem auto 0;">
-      <p style="text-align:center;font-size:0.88rem;color:#666;margin-bottom:0.8rem;">
-        Accuracy comparison across 20 representative camera traps (averaged).
-      </p>
-      <table class="table is-striped is-hoverable is-fullwidth results-table">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Avg. Accuracy (%)</th>
-            <th>vs. Zero-Shot</th>
-            <th>Sites &gt; ZS (of 546)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Zero-Shot (BioCLIP 2)</td>
-            <td>81.9</td>
-            <td>—</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td>Accum (naive fine-tune)</td>
-            <td>67.9</td>
-            <td class="red">−14.0</td>
-            <td>332</td>
-          </tr>
-          <tr>
-            <td>Accum★ (BSM + LoRA)</td>
-            <td>84.8</td>
-            <td class="blue">+2.9</td>
-            <td>474</td>
-          </tr>
-          <tr>
-            <td>Oracle★ (upper bound)</td>
-            <td>88.8</td>
-            <td class="blue">+6.9</td>
-            <td>—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
 <!-- ════════════════════════════════════════ RECIPE ════════ -->
 <section id="recipe" class="section">
   <div class="container">
@@ -316,17 +337,205 @@
         <span class="recipe-plus">+</span>
         <span class="recipe-badge">LoRA (PEFT)</span>
       </div>
-      <p style="font-size:0.87rem;color:#555;margin-top:1rem;line-height:1.6;">
+      <p style="font-size:1.03rem;color:#555;margin-top:1rem;line-height:1.68;">
         <strong>Balanced Softmax (BSM)</strong> addresses severe class imbalance without hyperparameter tuning.
         <strong>LoRA</strong> preserves pre-trained representations while enabling efficient site-specific adaptation.
-        Combined, they yield a compounding boost that enables <strong>474 / 546 sites</strong> to outperform zero-shot
-        (vs. only 332 for naive fine-tuning).
+        Combined, they yield a compounding boost that enables <strong>474 / 546 sites</strong> to outperform zero-shot.
       </p>
       <div class="postprocess-tags">
         <strong>Augment with post-processing:</strong><br>
         <span class="tag-inline">Logit Calibration</span>
         <span class="tag-inline">Weight Interpolation (WiSE)</span>
         <span class="tag-inline">Interval Model Selection</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ RESULTS ════════ -->
+<section id="results" class="section">
+  <div class="container">
+    <h2 class="section-title">Results</h2>
+    <hr class="divider">
+
+    <!-- Zero-shot variability and the effect of the adaptation recipe -->
+    <div class="performance-story">
+      <div class="results-visualization" data-source="static/data/oracle_zs_all.csv">
+        <div class="result-box-explanation result-question">
+          <h3>Are foundation models already sufficient?</h3>
+          <p>Only at some sites. Zero-Shot BioCLIP 2 exceeds 90% accuracy at 161 camera traps, yet falls
+            between 50&ndash;80% at another 162. This variability leaves a clear need for site-specific adaptation.</p>
+        </div>
+        <article class="results-chart-card zero-shot-card">
+          <header class="results-chart-header">
+            <div>
+              <h4>Zero-Shot</h4>
+            </div>
+            <p>Per-class accuracy across 546 camera traps, ranked from highest to lowest</p>
+          </header>
+          <div class="zero-shot-legend" aria-label="Zero-Shot performance bands">
+            <span><i class="chart-swatch strong"></i>Above 90%</span>
+            <span><i class="chart-swatch middle"></i>80&ndash;90%</span>
+            <span><i class="chart-swatch weak"></i>Below 80%</span>
+          </div>
+          <div class="results-canvas-wrap results-canvas-large">
+            <canvas id="zero-shot-distribution"
+              aria-label="Ranked Zero-Shot per-class accuracy across 546 camera traps">
+              Ranked Zero-Shot per-class accuracy across 546 camera traps.
+            </canvas>
+          </div>
+        </article>
+
+        <div class="result-box-explanation result-question">
+          <h3>If Zero-Shot falls short, can we simply fine-tune?</h3>
+          <p>The results show that fine-tuning alone is not enough. Naive accumulated fine-tuning can
+            fall below Zero-Shot, and even Oracle
+            fine-tuning&mdash;with temporal uncertainty removed&mdash;underperforms at 214 of 546 sites.
+            Balanced Softmax with LoRA makes this adaptation substantially more reliable.</p>
+        </div>
+        <article class="results-chart-card oracle-comparison-card">
+          <header class="results-chart-header">
+            <div>
+              <h4>Oracle Fine-Tuning</h4>
+            </div>
+            <p>Accuracy change relative to the same Zero-Shot baseline</p>
+          </header>
+          <div class="delta-chart-legend" aria-label="Accuracy-change legend">
+            <span><i class="chart-swatch gain"></i>Adaptation performs better</span>
+            <span><i class="chart-swatch loss"></i>Zero-Shot remains better</span>
+          </div>
+
+          <div class="oracle-comparison">
+            <section class="oracle-panel">
+              <header class="results-chart-header">
+                <div>
+                  <h4>Oracle &minus; Zero-Shot</h4>
+                </div>
+              </header>
+              <div class="results-canvas-wrap">
+                <canvas id="oracle-delta"
+                  aria-label="Change in per-class accuracy from Zero-Shot to Oracle">
+                  Change in per-class accuracy from Zero-Shot to Oracle.
+                </canvas>
+              </div>
+            </section>
+
+            <div class="recipe-arrow" aria-label="Apply our adaptation recipe">
+              <span>Apply our recipe</span>
+              <i aria-hidden="true"></i>
+            </div>
+
+            <section class="oracle-panel recipe-result">
+              <header class="results-chart-header">
+                <div>
+                  <h4>Oracle&#9733; &minus; Zero-Shot</h4>
+                </div>
+              </header>
+              <div class="results-canvas-wrap">
+                <canvas id="oracle-star-delta"
+                  aria-label="Change in per-class accuracy from Zero-Shot to Oracle star">
+                  Change in per-class accuracy from Zero-Shot to Oracle star.
+                </canvas>
+              </div>
+            </section>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Results table -->
+    <div class="result-box-explanation result-question table-result-explanation">
+      <h3>Does the robust recipe work in realistic streaming deployment?</h3>
+      <p>The recipe transfers well to this realistic streaming setting. Across these representative
+        sites, Accum&#9733; recovers the large losses of naive Accum and consistently surpasses Zero-Shot.
+        A gap to Oracle&#9733; remains, revealing the challenge of adapting to future shifts without
+        access to future labels.</p>
+    </div>
+    <div class="table-container camera-results-table">
+      <header class="results-chart-header camera-results-header">
+        <div>
+          <h4>20-Camera Results</h4>
+        </div>
+        <p>Per-class accuracy (%) across 20 representative camera traps.</p>
+      </header>
+      <div class="delta-legend table-delta-legend" aria-label="Delta color legend">
+        <span class="delta-explanation"><strong>Δ</strong><b>Difference from Zero-Shot</b></span>
+        <span><i class="chart-swatch loss"></i>Decrease from Zero-Shot</span>
+        <span><i class="chart-swatch gain"></i>Improvement over Zero-Shot</span>
+      </div>
+      <div class="results-table-panel">
+        <table class="table is-hoverable is-fullwidth results-table">
+        <thead>
+          <tr>
+            <th scope="col">Camera Index</th>
+            <th scope="col">C1</th><th scope="col">C2</th><th scope="col">C3</th><th scope="col">C4</th>
+            <th scope="col">C5</th><th scope="col">C6</th><th scope="col">C7</th><th scope="col">C8</th>
+            <th scope="col">C9</th><th scope="col">C10</th><th scope="col">C11</th><th scope="col">C12</th>
+            <th scope="col">C13</th><th scope="col">C14</th><th scope="col">C15</th><th scope="col">C16</th>
+            <th scope="col">C17</th><th scope="col">C18</th><th scope="col">C19</th><th scope="col">C20</th>
+            <th scope="col">Avg</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="model-row baseline-row">
+            <th scope="row">Zero-Shot</th>
+            <td>97.7</td><td>92.3</td><td>90.9</td><td>89.1</td><td>86.1</td>
+            <td>84.3</td><td>81.5</td><td>81.2</td><td>78.3</td><td>77.1</td>
+            <td>75.8</td><td>73.8</td><td>70.1</td><td>69.8</td><td>67.1</td>
+            <td>66.0</td><td>62.2</td><td>61.5</td><td>56.3</td><td>55.8</td>
+            <td class="average">75.8</td>
+          </tr>
+          <tr class="model-row">
+            <th scope="row">Accum</th>
+            <td>73.6</td><td>77.1</td><td>50.0</td><td>71.7</td><td>46.7</td>
+            <td>33.3</td><td>56.7</td><td>73.0</td><td>45.0</td><td>25.0</td>
+            <td>57.0</td><td>50.0</td><td>68.2</td><td>60.8</td><td>66.7</td>
+            <td>11.4</td><td>61.7</td><td>58.0</td><td>33.3</td><td>45.7</td>
+            <td class="average">53.2</td>
+          </tr>
+          <tr class="delta-row red group-end">
+            <th scope="row">Δ</th>
+            <td>24.1</td><td>15.2</td><td>40.9</td><td>17.4</td><td>39.4</td>
+            <td>51.0</td><td>24.8</td><td>8.2</td><td>33.3</td><td>52.1</td>
+            <td>18.8</td><td>23.8</td><td>1.9</td><td>9.0</td><td>0.4</td>
+            <td>54.6</td><td>0.5</td><td>3.5</td><td>23.0</td><td>10.1</td>
+            <td>–</td>
+          </tr>
+          <tr class="model-row">
+            <th scope="row">Accum★</th>
+            <td>98.7</td><td>89.9</td><td>89.9</td><td>90.8</td><td>79.4</td>
+            <td>79.2</td><td>83.4</td><td>88.3</td><td>81.0</td><td>78.7</td>
+            <td>76.9</td><td>70.1</td><td>79.4</td><td>75.4</td><td>86.9</td>
+            <td>76.6</td><td>88.9</td><td>71.3</td><td>76.7</td><td>82.6</td>
+            <td class="average">82.2</td>
+          </tr>
+          <tr class="delta-row group-end">
+            <th scope="row">Δ</th>
+            <td class="blue">1.0</td><td class="red">2.4</td><td class="red">1.0</td><td class="blue">1.7</td>
+            <td class="red">6.7</td><td class="red">5.1</td><td class="blue">1.9</td><td class="blue">7.1</td>
+            <td class="blue">2.7</td><td class="blue">1.6</td><td class="blue">1.1</td><td class="red">3.7</td>
+            <td class="blue">9.3</td><td class="blue">5.6</td><td class="blue">19.8</td><td class="blue">10.6</td>
+            <td class="blue">26.7</td><td class="blue">9.8</td><td class="blue">20.4</td><td class="blue">26.8</td>
+            <td>–</td>
+          </tr>
+          <tr class="model-row">
+            <th scope="row">Oracle★</th>
+            <td>98.7</td><td>96.4</td><td>94.5</td><td>96.6</td><td>87.8</td>
+            <td>91.5</td><td>91.0</td><td>91.0</td><td>87.3</td><td>82.0</td>
+            <td>84.3</td><td>88.5</td><td>91.0</td><td>86.6</td><td>91.0</td>
+            <td>83.9</td><td>93.8</td><td>89.6</td><td>89.9</td><td>93.4</td>
+            <td class="average">90.4</td>
+          </tr>
+          <tr class="delta-row blue group-end">
+            <th scope="row">Δ</th>
+            <td>1.0</td><td>4.1</td><td>3.6</td><td>7.5</td><td>1.7</td>
+            <td>7.2</td><td>9.5</td><td>9.8</td><td>9.0</td><td>4.9</td>
+            <td>8.5</td><td>14.7</td><td>20.9</td><td>16.8</td><td>23.9</td>
+            <td>17.9</td><td>31.6</td><td>28.1</td><td>33.6</td><td>37.6</td>
+            <td>–</td>
+          </tr>
+        </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -373,16 +582,15 @@
     <hr class="divider">
     <div class="bibtex-container">
       <button class="copy-btn" onclick="copyBib()">Copy</button>
-      <pre id="bib-text">@article{jeon2025streamtrap,
-  title     = {Lessons and Open Questions from a Unified Study of
-               Camera-Trap Species Recognition Over Time},
-  author    = {Jeon, Sooyoung and Tian, Hongjie and Wang, Lemeng and
-               Mai, Zheda and Bakshi, Vidhi and Hou, Jiacheng and
-               Zhang, Ping and Chowdhury, Arpita and Gu, Jianyang and
-               Chao, Wei-Lun},
-  journal   = {arXiv preprint},
-  year      = {2025},
-  note      = {Equal contribution: Jeon, Tian, Wang}
+      <pre id="bib-text">@inproceedings{jeon2026streamtrap,
+  title={Lessons and Open Questions from a Unified Study of
+         Camera-Trap Species Recognition Over Time},
+  author={Jeon, Sooyoung and Tian, Hongjie and Wang, Lemeng and
+          Mai, Zheda and Bakshi, Vidhi and Hou, Jiacheng and
+          Zhang, Ping and Chowdhury, Arpita and Gu, Jianyang and
+          Chao, Wei-Lun},
+  booktitle={European Conference on Computer Vision (ECCV)},
+  year={2026}
 }</pre>
     </div>
   </div>
@@ -401,6 +609,7 @@
   </div>
 </footer>
 
+<script src="static/js/oracle-zs-data.js"></script>
 <script src="static/js/main.js"></script>
 
 </body>
